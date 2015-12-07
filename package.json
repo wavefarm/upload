@@ -1,0 +1,10 @@
+{
+  "name": "upload",
+  "version": "0.0.0",
+  "description": "upload files to wavefarm",
+  "repository": "git://github.com/wavefarm/upload.git",
+  "dependencies": {
+    "moment": "^2.10.6",
+    "mustache": "^2.2.0"
+  }
+}
