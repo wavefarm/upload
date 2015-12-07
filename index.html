@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>up</title>
+    <style>
+      fieldset {
+        margin: 20px 0;
+      }
+      .container {
+        width: 800px;
+      }
+      #message {
+        display: none;
+      }
+      #url {
+        box-sizing: border-box;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p id="message">
+        Upload successful. <label for="url">URL:</label><br>
+        <input id="url" readonly>
+      </p>
+      <form action="https://{{bucket}}.objects.dreamhost.com" method="post" enctype="multipart/form-data" name="uploadForm">
+        <fieldset>
+          <legend>Upload</legend>
+          <input type="hidden" name="key" value="{{path}}/${filename}">
+          <input type="hidden" name="AWSAccessKeyId" value="{{accessKey}}">
+          <input type="hidden" name="acl" value="{{acl}}">
+          <input type="hidden" name="success_action_redirect" value="{{{successActionRedirect}}}">
+          <input type="hidden" name="policy" value="{{{policy}}}">
+          <input type="hidden" name="signature" value="{{{signature}}}">
+          <input type="hidden" name="Content-Type" value="">
+          <p><input type="file" name="file" id="file"></p>
+          <p><input type="submit"></p>
+        </fieldset>
+      </form>
+    </div>
+    <script>
+      // Guess the mimetype and update the Content-Type
+      // Inspired from http://jsbin.com/akati3/2
+      var file = document.getElementById('file');
+      file.addEventListener('change', function() {
+        document.forms["uploadForm"]["Content-Type"].value = file.files[0].type;
+      }, false);
+
+      var keyRe = /key=([^&]+)/;
+      if (keyRe.test(location.search)) {
+        var message = document.getElementById('message');
+        message.style.display = 'block';
+        var key = keyRe.exec(location.search)[1];
+        var url = document.getElementById('url');
+        url.value = 'https://data.wavefarm.org/' + decodeURIComponent(key);
+      }
+    </script>
+  </body>
+</html>
