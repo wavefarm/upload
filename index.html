@@ -26,7 +26,7 @@
       <form action="https://{{bucket}}.objects.dreamhost.com" method="post" enctype="multipart/form-data" name="uploadForm">
         <fieldset>
           <legend>Upload</legend>
-          <input type="hidden" name="key" value="{{path}}/${filename}">
+          <input type="hidden" name="key" value="">
           <input type="hidden" name="AWSAccessKeyId" value="{{accessKey}}">
           <input type="hidden" name="acl" value="{{acl}}">
           <input type="hidden" name="success_action_redirect" value="{{{successActionRedirect}}}">
@@ -42,8 +42,11 @@
       // Guess the mimetype and update the Content-Type
       // Inspired from http://jsbin.com/akati3/2
       var file = document.getElementById('file');
+      var uploadForm = document.forms["uploadForm"];
+      var sanitizeRe = /[^\w\-\.]/g;
       file.addEventListener('change', function() {
-        document.forms["uploadForm"]["Content-Type"].value = file.files[0].type;
+        uploadForm["Content-Type"].value = file.files[0].type;
+        uploadForm["key"].value = "{{path}}/" + file.files[0].name.replace(sanitizeRe, '_');
       }, false);
     </script>
   </body>
