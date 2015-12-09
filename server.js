@@ -39,17 +39,19 @@ http.createServer(function (req, res) {
   var query = url.parse(req.url, true).query;
   var fileUrl = query && query.key && 'https://data.wavefarm.org/' + query.key;
 
-  var opt = {
-    from: 'Wave Farm <info@wavefarm.org>',
-    subject: 'Wave Farm upload',
-    to: 'info@wgxc.org,archive@wgxc.org,info@wavefarm.org',
-    text: 'A file has been uploaded to data.wavefarm.org.\n\nURL: ' + fileUrl + '\n'
-  };
+  if (fileUrl) {
+    var opt = {
+      from: 'Wave Farm <info@wavefarm.org>',
+      subject: 'Wave Farm upload',
+      to: 'info@wgxc.org,archive@wgxc.org,info@wavefarm.org',
+      text: 'A file has been uploaded to data.wavefarm.org.\n\nURL: ' + fileUrl + '\n'
+    };
 
-  transporter.sendMail(opt, function (err, info) {
-    if (err) return console.error(err)
-    console.log('Email sent: ' + info.response)
-  });
+    transporter.sendMail(opt, function (err, info) {
+      if (err) return console.error(err)
+      console.log('Email sent: ' + info.response)
+    });
+  }
 
   var view = {
     path: moment().format('YYYYMMDDHHmmss'),
