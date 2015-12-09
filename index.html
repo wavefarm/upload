@@ -9,9 +9,6 @@
       .container {
         width: 800px;
       }
-      #message {
-        display: none;
-      }
       #url {
         box-sizing: border-box;
         width: 100%;
@@ -20,10 +17,12 @@
   </head>
   <body>
     <div class="container">
+      {{#url}}
       <p id="message">
         Upload successful. <label for="url">URL:</label><br>
-        <input id="url" readonly>
+        <input id="url" readonly value="{{{url}}}">
       </p>
+      {{/url}}
       <form action="https://{{bucket}}.objects.dreamhost.com" method="post" enctype="multipart/form-data" name="uploadForm">
         <fieldset>
           <legend>Upload</legend>
@@ -46,15 +45,6 @@
       file.addEventListener('change', function() {
         document.forms["uploadForm"]["Content-Type"].value = file.files[0].type;
       }, false);
-
-      var keyRe = /key=([^&]+)/;
-      if (keyRe.test(location.search)) {
-        var message = document.getElementById('message');
-        message.style.display = 'block';
-        var key = keyRe.exec(location.search)[1];
-        var url = document.getElementById('url');
-        url.value = 'https://data.wavefarm.org/' + decodeURIComponent(key);
-      }
     </script>
   </body>
 </html>
