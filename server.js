@@ -21,7 +21,7 @@ http.createServer(function (req, res) {
   var bucket = process.env.BUCKET;
   var successActionRedirect = process.env.LOCATION;
   var policyDoc = {
-    expiration: moment().add(10, 'minutes').utc().format('YYYY-MM-DDTHH:mm:ss\\Z'),
+    expiration: moment().add(60, 'minutes').utc().format('YYYY-MM-DDTHH:mm:ss\\Z'),
     conditions: [
       {acl: acl},
       {bucket: bucket},
