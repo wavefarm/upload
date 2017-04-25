@@ -15,7 +15,7 @@ var transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS
   }
 });
-
+// 20170425 - 0.0.0
 http.createServer(function (req, res) {
   var acl = 'public-read';
   var bucket = process.env.BUCKET;
